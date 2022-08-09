@@ -1,3 +1,6 @@
+(in-package :cl-user)
+(ql:quickload '(:lack-middleware-accesslog :lack-middleware-session))
+
 (defpackage #:clog-tut-17
   (:use #:cl #:clog)
   (:export start-tutorial))
@@ -106,7 +109,9 @@
 
 (defun start-tutorial ()
   "Start tutorial."
-  (initialize 'on-index)
+  (initialize 'on-index
+              :lack-middleware-list `(,lack.middleware.accesslog:*lack-middleware-accesslog*
+                                      ,lack.middleware.session:*lack-middleware-session*))
   (set-on-new-window 'on-page2 :path "/page2")
   (set-on-new-window 'on-page3 :path "/page3")
   (set-on-new-window 'on-page4 :path "/page4")
